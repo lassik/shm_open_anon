@@ -1,6 +1,8 @@
 // Copyright 2019 Lassi Kortela
 // SPDX-License-Identifier: ISC
 
+#define _GNU_SOURCE
+
 #include <sys/types.h>
 
 #include <sys/mman.h>
@@ -34,6 +36,7 @@
 #endif
 
 #ifdef __linux__
+#define _GNU_SOURCE
 #define IMPL_DEV_SHM
 #endif
 
