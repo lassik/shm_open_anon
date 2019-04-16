@@ -10,3 +10,7 @@ tab_width = 8
 [*.c]
 indent_size = 8
 indent_style = tab
+
+[*.sh]
+indent_size = 8
+indent_style = tab
