@@ -46,6 +46,14 @@
 
 //
 
+#ifdef IMPL_DEV_SHM
+#ifndef O_TMPFILE
+#define O_TMPFILE 0
+#endif
+#endif
+
+//
+
 static int save_errno_and_close(int fd)
 {
 	int save;
