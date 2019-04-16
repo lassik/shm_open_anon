@@ -1,0 +1,6 @@
+---
+BasedOnStyle: WebKit
+TabWidth: 8
+IndentWidth: 8
+UseTab: ForIndentation
+AlwaysBreakAfterReturnType: None
