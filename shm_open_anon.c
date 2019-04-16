@@ -96,7 +96,7 @@ int shm_open_anon_private(void)
 	int fd;
 
 	snprintf(name, sizeof(name), "/dev/shm/XXXXXXXX");
-	if ((fd = mkostemp(name, O_CLOEXEC)) == -1)
+	if ((fd = mkostemp(name, O_CLOEXEC | O_TMPFILE)) == -1)
 		return -1;
 	if (shm_unlink(name) == -1)
 		return save_errno_and_close(fd);
