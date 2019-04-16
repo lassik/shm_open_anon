@@ -76,7 +76,7 @@ int shm_open_anon_private(void)
 	char name[16];
 	int fd;
 
-	snprintf(name, sizeof(name), "/tmp/XXXXXXXX");
+	snprintf(name, sizeof(name), "/tmp/shmXXXXXXXX");
 	if (mktemp(name) == NULL)
 		return -1;
 	if ((fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL, 0600)) == -1)
@@ -112,7 +112,7 @@ int shm_open_anon_private(void)
 	char name[16];
 	int fd;
 
-	snprintf(name, sizeof(name), "/tmp/XXXXXXXX");
+	snprintf(name, sizeof(name), "/tmp/shmXXXXXXXX");
 	if ((fd = shm_mkstemp(name)) == -1)
 		return -1;
 	if (shm_unlink(name) == -1)
