@@ -36,7 +36,6 @@
 #endif
 
 #ifdef __linux__
-#define _GNU_SOURCE
 #define IMPL_DEV_SHM
 #endif
 
