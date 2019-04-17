@@ -58,14 +58,17 @@
 //
 
 static int
-save_errno_and_close(int fd)
+shm_unlink_or_close(const char *name, int fd)
 {
 	int save;
 
-	save = errno;
-	close(fd);
-	errno = save;
-	return -1;
+	if (shm_unlink(name) == -1) {
+		save = errno;
+		close(fd);
+		errno = save;
+		return -1;
+	}
+	return fd;
 }
 
 //
@@ -82,9 +85,7 @@ shm_open_anon(void)
 		return -1;
 	if ((fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL, 0600)) == -1)
 		return -1;
-	if (shm_unlink(name) == -1)
-		return save_errno_and_close(fd);
-	return fd;
+	return shm_unlink_or_close(name, fd);
 }
 #endif
 
@@ -100,9 +101,7 @@ shm_open_anon(void)
 	snprintf(name, sizeof(name), "/tmp/shmXXXXXXX");
 	if ((fd = shm_mkstemp(name)) == -1)
 		return -1;
-	if (shm_unlink(name) == -1)
-		return save_errno_and_close(fd);
-	return fd;
+	return shm_unlink_or_close(name, fd);
 }
 #endif
 
@@ -118,9 +117,7 @@ shm_open_anon(void)
 	snprintf(name, sizeof(name), "/dev/shm/XXXXXX");
 	if ((fd = mkostemp(name, O_CLOEXEC | O_TMPFILE)) == -1)
 		return -1;
-	if (shm_unlink(name) == -1)
-		return save_errno_and_close(fd);
-	return fd;
+	return shm_unlink_or_close(name, fd);
 }
 #endif
 
