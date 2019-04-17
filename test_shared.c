@@ -22,6 +22,25 @@ diesys(const char *msg)
     exit(1);
 }
 
+static int
+fd_without_close_on_exec(int fd)
+{
+    int flags;
+
+    if ((flags = fcntl(fd, F_GETFD)) == -1)
+        diesys("get close-on-exec");
+    flags &= ~FD_CLOEXEC;
+    if (fcntl(fd, F_SETFD, flags) == -1)
+        diesys("set close-on-exec");
+    return fd;
+}
+
+static int
+shm_open_anon_shared(void)
+{
+    return fd_without_close_on_exec(shm_open_anon_private());
+}
+
 static void *
 map_shared_memory_from_fd(int fd, size_t *out_size)
 {

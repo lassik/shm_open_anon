@@ -68,18 +68,6 @@ static int save_errno_and_close(int fd)
 	return -1;
 }
 
-static int fd_without_close_on_exec(int fd)
-{
-	int flags;
-
-	if ((flags = fcntl(fd, F_GETFD)) == -1)
-		return save_errno_and_close(fd);
-	flags &= ~FD_CLOEXEC;
-	if (fcntl(fd, F_SETFD, flags) == -1)
-		return save_errno_and_close(fd);
-	return fd;
-}
-
 //
 
 #ifdef IMPL_CLASSIC
@@ -141,10 +129,3 @@ int shm_open_anon_private(void)
 	return shm_open(SHM_ANON, 0, 0);
 }
 #endif
-
-//
-
-int shm_open_anon_shared(void)
-{
-	return fd_without_close_on_exec(shm_open_anon_private());
-}
