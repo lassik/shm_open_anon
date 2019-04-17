@@ -91,24 +91,6 @@ shm_open_anon(void)
 
 //
 
-#ifdef IMPL_DEV_SHM
-int
-shm_open_anon(void)
-{
-	char name[16];
-	int fd;
-
-	snprintf(name, sizeof(name), "/dev/shm/XXXXXX");
-	if ((fd = mkostemp(name, O_CLOEXEC | O_TMPFILE)) == -1)
-		return -1;
-	if (shm_unlink(name) == -1)
-		return save_errno_and_close(fd);
-	return fd;
-}
-#endif
-
-//
-
 #ifdef IMPL_SHM_MKSTEMP
 int
 shm_open_anon(void)
@@ -118,6 +100,24 @@ shm_open_anon(void)
 
 	snprintf(name, sizeof(name), "/tmp/shmXXXXXXX");
 	if ((fd = shm_mkstemp(name)) == -1)
+		return -1;
+	if (shm_unlink(name) == -1)
+		return save_errno_and_close(fd);
+	return fd;
+}
+#endif
+
+//
+
+#ifdef IMPL_DEV_SHM
+int
+shm_open_anon(void)
+{
+	char name[16];
+	int fd;
+
+	snprintf(name, sizeof(name), "/dev/shm/XXXXXX");
+	if ((fd = mkostemp(name, O_CLOEXEC | O_TMPFILE)) == -1)
 		return -1;
 	if (shm_unlink(name) == -1)
 		return save_errno_and_close(fd);
