@@ -38,7 +38,7 @@ fd_without_close_on_exec(int fd)
 static int
 shm_open_anon_shared(void)
 {
-	return fd_without_close_on_exec(shm_open_anon_private());
+	return fd_without_close_on_exec(shm_open_anon());
 }
 
 static void *

@@ -73,7 +73,7 @@ save_errno_and_close(int fd)
 
 #ifdef IMPL_CLASSIC
 int
-shm_open_anon_private(void)
+shm_open_anon(void)
 {
 	char name[16];
 	int fd;
@@ -93,7 +93,7 @@ shm_open_anon_private(void)
 
 #ifdef IMPL_DEV_SHM
 int
-shm_open_anon_private(void)
+shm_open_anon(void)
 {
 	char name[16];
 	int fd;
@@ -111,7 +111,7 @@ shm_open_anon_private(void)
 
 #ifdef IMPL_SHM_MKSTEMP
 int
-shm_open_anon_private(void)
+shm_open_anon(void)
 {
 	char name[16];
 	int fd;
@@ -129,7 +129,7 @@ shm_open_anon_private(void)
 
 #ifdef IMPL_SHM_ANON
 int
-shm_open_anon_private(void)
+shm_open_anon(void)
 {
 	return shm_open(SHM_ANON, 0, 0);
 }
