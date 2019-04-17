@@ -16,23 +16,23 @@
 
 //
 
-#undef IMPL_CLASSIC
+#undef IMPL_POSIX
 #undef IMPL_DEV_SHM
 #undef IMPL_SHM_ANON
 #undef IMPL_SHM_MKSTEMP
 
 #ifdef __APPLE__
 #ifdef __MACH__
-#define IMPL_CLASSIC
+#define IMPL_POSIX
 #endif
 #endif
 
 #ifdef __NetBSD__
-#define IMPL_CLASSIC
+#define IMPL_POSIX
 #endif
 
 #ifdef __DragonFly__
-#define IMPL_CLASSIC
+#define IMPL_POSIX
 #endif
 
 #ifdef __linux__
@@ -71,7 +71,7 @@ save_errno_and_close(int fd)
 
 //
 
-#ifdef IMPL_CLASSIC
+#ifdef IMPL_POSIX
 int
 shm_open_anon(void)
 {
