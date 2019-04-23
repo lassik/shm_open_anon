@@ -104,18 +104,18 @@ shm_open_anon(void)
 }
 #endif
 
-#ifdef IMPL_MEMFD
-int
-shm_open_anon(void)
-{
-	return syscall(__NR_memfd_create, "shm_anon", (unsigned int)0);
-}
-#endif
-
 #ifdef IMPL_SHM_ANON
 int
 shm_open_anon(void)
 {
 	return shm_open(SHM_ANON, O_RDWR, 0);
+}
+#endif
+
+#ifdef IMPL_MEMFD
+int
+shm_open_anon(void)
+{
+	return syscall(__NR_memfd_create, "shm_anon", (unsigned int)0);
 }
 #endif
