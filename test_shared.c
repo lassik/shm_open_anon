@@ -38,7 +38,11 @@ fd_without_close_on_exec(int fd)
 static int
 shm_open_anon_shared(void)
 {
-	return fd_without_close_on_exec(shm_open_anon());
+        int fd;
+
+        if ((fd = shm_open_anon()) == -1)
+                diesys("shm_open_anon()");
+	return fd_without_close_on_exec(fd);
 }
 
 static void *
