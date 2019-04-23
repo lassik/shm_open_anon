@@ -49,7 +49,7 @@
 #endif
 
 #ifdef __OpenBSD__
-#define IMPL_SHM_MKSTEMP "/tmp/shmXXXXXXX"
+#define IMPL_SHM_MKSTEMP "/shmXXXXXXX"
 #endif
 
 #ifdef IMPL_POSIX
