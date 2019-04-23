@@ -49,14 +49,6 @@
 
 //
 
-#ifdef IMPL_DEV_SHM
-#ifndef O_TMPFILE
-#define O_TMPFILE 0
-#endif
-#endif
-
-//
-
 static int
 shm_unlink_or_close(const char *name, int fd)
 {
@@ -114,8 +106,9 @@ shm_open_anon(void)
 	char name[16];
 	int fd;
 
+
 	snprintf(name, sizeof(name), "/dev/shm/XXXXXX");
-	if ((fd = mkostemp(name, O_CLOEXEC | O_TMPFILE)) == -1)
+	if ((fd = mkostemp(name, O_CLOEXEC)) == -1)
 		return -1;
 	return shm_unlink_or_close(name, fd);
 }
