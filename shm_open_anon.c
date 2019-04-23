@@ -17,8 +17,6 @@
 #include <string.h>
 #include <unistd.h>
 
-//
-
 #undef IMPL_MEMFD
 #undef IMPL_POSIX
 #undef IMPL_SHM_ANON
@@ -60,8 +58,6 @@
 #define SHM_UNLINK_OR_CLOSE
 #endif
 
-//
-
 #ifdef SHM_UNLINK_OR_CLOSE
 static int
 shm_unlink_or_close(const char *name, int fd)
@@ -77,8 +73,6 @@ shm_unlink_or_close(const char *name, int fd)
 	return fd;
 }
 #endif
-
-//
 
 #ifdef IMPL_POSIX
 int
@@ -96,8 +90,6 @@ shm_open_anon(void)
 }
 #endif
 
-//
-
 #ifdef IMPL_SHM_MKSTEMP
 int
 shm_open_anon(void)
@@ -112,8 +104,6 @@ shm_open_anon(void)
 }
 #endif
 
-//
-
 #ifdef IMPL_MEMFD
 int
 shm_open_anon(void)
@@ -121,8 +111,6 @@ shm_open_anon(void)
 	return syscall(__NR_memfd_create, "shm_anon", (unsigned int)0);
 }
 #endif
-
-//
 
 #ifdef IMPL_SHM_ANON
 int
