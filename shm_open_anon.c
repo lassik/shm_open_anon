@@ -11,9 +11,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
 #undef IMPL_MEMFD
@@ -78,10 +76,9 @@ shm_unlink_or_close(const char *name, int fd)
 int
 shm_open_anon(void)
 {
-	char name[16];
+	char name[16] = IMPL_POSIX;
 	int fd;
 
-	snprintf(name, sizeof(name), "%s", IMPL_POSIX);
 	if (mktemp(name) == NULL)
 		return -1;
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
@@ -95,10 +92,9 @@ shm_open_anon(void)
 int
 shm_open_anon(void)
 {
-	char name[16];
+	char name[16] = IMPL_SHM_MKSTEMP;
 	int fd;
 
-	snprintf(name, sizeof(name), IMPL_SHM_MKSTEMP);
 	if ((fd = shm_mkstemp(name)) == -1)
 		return -1;
 	return shm_unlink_or_close(name, fd);
