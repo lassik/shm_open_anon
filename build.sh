@@ -39,6 +39,7 @@ esac
 CC="${CC:-$default_cc}"
 CFLAGS="${CFLAGS:-$default_cflags}"
 LFLAGS="${LFLAGS:-$default_lflags}"
+echo "Entering directory '$PWD'"
 set -x
 $CC $CFLAGS -c shm_open_anon.c
 $CC $CFLAGS -c test_shared.c
