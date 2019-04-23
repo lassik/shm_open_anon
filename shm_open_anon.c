@@ -20,22 +20,20 @@
 #undef IMPL_POSIX
 #undef IMPL_SHM_ANON
 #undef IMPL_SHM_MKSTEMP
+#undef IMPL_UNLINK_OR_CLOSE
 
 #ifdef __APPLE__
 #ifdef __MACH__
-#define IMPL_POSIX
-#define IMPL_POSIX_TEMPLATE "/tmp/shmXXXXXXX"
+#define IMPL_POSIX "/tmp/shmXXXXXXX"
 #endif
 #endif
 
 #ifdef __DragonFly__
-#define IMPL_POSIX
-#define IMPL_POSIX_TEMPLATE "/tmp/shmXXXXXXX"
+#define IMPL_POSIX "/tmp/shmXXXXXXX"
 #endif
 
 #ifdef __NetBSD__
-#define IMPL_POSIX
-#define IMPL_POSIX_TEMPLATE "/shmXXXXXXX"
+#define IMPL_POSIX "/shmXXXXXXX"
 #endif
 
 #ifdef __linux__
@@ -53,14 +51,14 @@
 #endif
 
 #ifdef IMPL_POSIX
-#define SHM_UNLINK_OR_CLOSE
+#define IMPL_UNLINK_OR_CLOSE
 #endif
 
 #ifdef IMPL_SHM_MKSTEMP
-#define SHM_UNLINK_OR_CLOSE
+#define IMPL_UNLINK_OR_CLOSE
 #endif
 
-#ifdef SHM_UNLINK_OR_CLOSE
+#ifdef IMPL_UNLINK_OR_CLOSE
 static int
 shm_unlink_or_close(const char *name, int fd)
 {
@@ -83,7 +81,7 @@ shm_open_anon(void)
 	char name[16];
 	int fd;
 
-	snprintf(name, sizeof(name), "%s", IMPL_POSIX_TEMPLATE);
+	snprintf(name, sizeof(name), "%s", IMPL_POSIX);
 	if (mktemp(name) == NULL)
 		return -1;
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
