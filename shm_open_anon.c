@@ -84,7 +84,8 @@ shm_open_anon(void)
 	snprintf(name, sizeof(name), "/tmp/shmXXXXXXX");
 	if (mktemp(name) == NULL)
 		return -1;
-	if ((fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL, 0600)) == -1)
+	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
+	if (fd == -1)
 		return -1;
 	return shm_unlink_or_close(name, fd);
 }
