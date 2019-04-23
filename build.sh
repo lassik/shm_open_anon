@@ -16,6 +16,11 @@ FreeBSD)
 	default_cflags="-Wall -Wextra -pedantic -std=c99"
 	default_lflags=""
 	;;
+Haiku)
+	default_cc=gcc
+	default_cflags="-Wall"
+	default_lflags=""
+	;;
 Linux)
 	default_cc=gcc
 	default_cflags="-Wall -Wextra -pedantic -std=gnu99"
