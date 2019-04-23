@@ -25,15 +25,18 @@
 #ifdef __APPLE__
 #ifdef __MACH__
 #define IMPL_POSIX
+#define IMPL_POSIX_TEMPLATE "/tmp/shmXXXXXXX"
 #endif
-#endif
-
-#ifdef __NetBSD__
-#define IMPL_POSIX
 #endif
 
 #ifdef __DragonFly__
 #define IMPL_POSIX
+#define IMPL_POSIX_TEMPLATE "/tmp/shmXXXXXXX"
+#endif
+
+#ifdef __NetBSD__
+#define IMPL_POSIX
+#define IMPL_POSIX_TEMPLATE "/shmXXXXXXX"
 #endif
 
 #ifdef __linux__
@@ -81,7 +84,7 @@ shm_open_anon(void)
 	char name[16];
 	int fd;
 
-	snprintf(name, sizeof(name), "/tmp/shmXXXXXXX");
+	snprintf(name, sizeof(name), "%s", IMPL_POSIX_TEMPLATE);
 	if (mktemp(name) == NULL)
 		return -1;
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
