@@ -128,6 +128,6 @@ shm_open_anon(void)
 int
 shm_open_anon(void)
 {
-	return shm_open(SHM_ANON, 0, 0);
+	return shm_open(SHM_ANON, O_RDWR, 0);
 }
 #endif
