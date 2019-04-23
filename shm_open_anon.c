@@ -118,7 +118,7 @@ shm_open_anon(void)
 int
 shm_open_anon(void)
 {
-        return syscall(__NR_memfd_create, "shm_anon", (unsigned int)0);
+	return syscall(__NR_memfd_create, "shm_anon", (unsigned int)0);
 }
 #endif
 
