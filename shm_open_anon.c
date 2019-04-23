@@ -30,6 +30,10 @@
 #define IMPL_SHM_ANON
 #endif
 
+#ifdef __HAIKU__
+#define IMPL_POSIX "/shmXXXXXXX"
+#endif
+
 #ifdef __NetBSD__
 #define IMPL_POSIX "/shmXXXXXXX"
 #endif
