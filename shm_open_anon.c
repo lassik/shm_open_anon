@@ -40,7 +40,7 @@
 
 #ifdef __APPLE__
 #ifdef __MACH__
-#define IMPL_POSIX "/tmp/shmXXXXXXX"
+#define IMPL_POSIX "/shmXXXXXXX"
 #endif
 #endif
 
