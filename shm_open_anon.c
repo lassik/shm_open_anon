@@ -1,7 +1,10 @@
 // Copyright 2019 Lassi Kortela
 // SPDX-License-Identifier: ISC
 
+#ifdef __linux__
 #define _GNU_SOURCE
+#include <linux/unistd.h>
+#endif
 
 #include <sys/types.h>
 
@@ -16,8 +19,8 @@
 
 //
 
+#undef IMPL_MEMFD
 #undef IMPL_POSIX
-#undef IMPL_DEV_SHM
 #undef IMPL_SHM_ANON
 #undef IMPL_SHM_MKSTEMP
 
@@ -36,7 +39,9 @@
 #endif
 
 #ifdef __linux__
-#define IMPL_DEV_SHM
+#ifdef __NR_memfd_create
+#define IMPL_MEMFD
+#endif
 #endif
 
 #ifdef __FreeBSD__
@@ -47,8 +52,17 @@
 #define IMPL_SHM_MKSTEMP
 #endif
 
+#ifdef IMPL_POSIX
+#define SHM_UNLINK_OR_CLOSE
+#endif
+
+#ifdef IMPL_SHM_MKSTEMP
+#define SHM_UNLINK_OR_CLOSE
+#endif
+
 //
 
+#ifdef SHM_UNLINK_OR_CLOSE
 static int
 shm_unlink_or_close(const char *name, int fd)
 {
@@ -62,6 +76,7 @@ shm_unlink_or_close(const char *name, int fd)
 	}
 	return fd;
 }
+#endif
 
 //
 
@@ -99,18 +114,11 @@ shm_open_anon(void)
 
 //
 
-#ifdef IMPL_DEV_SHM
+#ifdef IMPL_MEMFD
 int
 shm_open_anon(void)
 {
-	char name[16];
-	int fd;
-
-
-	snprintf(name, sizeof(name), "/dev/shm/XXXXXX");
-	if ((fd = mkostemp(name, O_CLOEXEC)) == -1)
-		return -1;
-	return shm_unlink_or_close(name, fd);
+        return syscall(__NR_memfd_create, "shm_anon", (unsigned int)0);
 }
 #endif
 
