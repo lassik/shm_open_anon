@@ -225,3 +225,28 @@ And the POSIX API is "standardized".
 - Not sure whether or not the original BeOS had these same semantics.
 
 - https://github.com/haiku/haiku/blob/master/src/system/libroot/posix/sys/mman.cpp
+
+== Cygwin
+
+- Probably have to use `shm_open()` and `shm_unlink()`.
+
+- Not sure if clearing the close-on-exec flag and using `dup2()` will
+  have the desired effect.
+
+- Translates your pathname by removing at most one slash from the
+  beginning. Then puts that name under `/dev/shm/` with no escaping of
+  slashes. So it's best to use a name that has only one slash with the
+  start; if you use more slashes, those subdirectories may have to
+  exist under `/dev/shm`.
+
+- As far as I can tell, `/dev/shm` is an ordinary directory on a
+  disk-backed file system, not a special memory-back file system. So
+  expect shared memory to be slow, especially on traditional hard
+  disks.
+
+- Cygwin also supports System V IPC (`shmget()` et.al.) and it seems
+  to be specially implemented by `cygserver` on a better foundation.
+
+- https://github.com/Alexpux/Cygwin/blob/master/newlib/libc/sys/linux/shm_open.c
+
+- http://pipeline.lbl.gov/code/3rd_party/licenses.win/Cygwin/cygserver.README
