@@ -47,7 +47,7 @@
 #endif
 
 #ifdef __OpenBSD__
-#define IMPL_SHM_MKSTEMP
+#define IMPL_SHM_MKSTEMP "/tmp/shmXXXXXXX"
 #endif
 
 #ifdef IMPL_POSIX
@@ -98,7 +98,7 @@ shm_open_anon(void)
 	char name[16];
 	int fd;
 
-	snprintf(name, sizeof(name), "/tmp/shmXXXXXXX");
+	snprintf(name, sizeof(name), IMPL_SHM_MKSTEMP);
 	if ((fd = shm_mkstemp(name)) == -1)
 		return -1;
 	return shm_unlink_or_close(name, fd);
