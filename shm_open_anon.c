@@ -22,20 +22,6 @@
 #undef IMPL_SHM_MKSTEMP
 #undef IMPL_UNLINK_OR_CLOSE
 
-#ifdef __APPLE__
-#ifdef __MACH__
-#define IMPL_POSIX "/tmp/shmXXXXXXX"
-#endif
-#endif
-
-#ifdef __DragonFly__
-#define IMPL_POSIX "/tmp/shmXXXXXXX"
-#endif
-
-#ifdef __NetBSD__
-#define IMPL_POSIX "/shmXXXXXXX"
-#endif
-
 #ifdef __linux__
 #ifdef __NR_memfd_create
 #define IMPL_MEMFD
@@ -44,6 +30,20 @@
 
 #ifdef __FreeBSD__
 #define IMPL_SHM_ANON
+#endif
+
+#ifdef __NetBSD__
+#define IMPL_POSIX "/shmXXXXXXX"
+#endif
+
+#ifdef __APPLE__
+#ifdef __MACH__
+#define IMPL_POSIX "/tmp/shmXXXXXXX"
+#endif
+#endif
+
+#ifdef __DragonFly__
+#define IMPL_POSIX "/tmp/shmXXXXXXX"
 #endif
 
 #ifdef __OpenBSD__
