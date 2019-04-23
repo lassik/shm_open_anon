@@ -1,13 +1,14 @@
 // Copyright 2019 Lassi Kortela
 // SPDX-License-Identifier: ISC
 
+#ifdef __linux__
+#define _GNU_SOURCE
+#include <linux/unistd.h>
+#endif
+
 #include <sys/types.h>
 
 #include <sys/mman.h>
-
-#ifdef __linux__
-#include <linux/unistd.h>
-#endif
 
 #include <errno.h>
 #include <fcntl.h>
@@ -117,6 +118,7 @@ shm_open_anon(void)
 int
 shm_open_anon(void)
 {
-	return syscall(__NR_memfd_create, "shm_anon", (unsigned int)0);
+	return syscall(
+	  __NR_memfd_create, "shm_anon", (unsigned int)(MFD_CLOEXEC));
 }
 #endif
