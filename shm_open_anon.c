@@ -130,7 +130,7 @@ shm_open_anon(void)
 
 #ifdef IMPL_SHM_MKSTEMP
 int
-pshm_open_anon(void)
+shm_open_anon(void)
 {
 	char name[16] = IMPL_SHM_MKSTEMP "XXXXXXXXXX";
 	int fd;
