@@ -202,10 +202,6 @@ And the POSIX API is "standardized".
 - I didn't find anything better than `shm_open()` and `shm_unlink()`
   with POSIX semantics.
 
-- I didn't find any impediment to clearing the close-on-exec flag from
-  the file descriptor returned by `shm_open()` but did not test that
-  it works.
-
 - https://docs.oracle.com/cd/E26505_01/html/816-5171/shm-open-3rt.html
 
 - https://docs.oracle.com/cd/E26505_01/html/816-5171/shm-unlink-3rt.html
