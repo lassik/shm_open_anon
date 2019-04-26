@@ -83,34 +83,45 @@ shm_unlink_or_close(const char *name, int fd)
 #endif
 
 #ifdef IMPL_POSIX
+static int
+fill_random_alnum(char *start, char *limit)
+{
+	const char alnum[] = "0123456789"
+	                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	                     "abcdefghijklmnopqrstuvwxyz";
+	size_t nbyte, nalnum;
+	ssize_t nread;
+	int fd;
+
+	if ((fd = open("/dev/random", O_RDONLY)) == -1)
+		return -1;
+	errno = EBUSY;
+	nbyte = limit - start;
+	if ((nread = read(fd, start, nbyte)) == (ssize_t)-1)
+		return -1;
+	if (nread != (ssize_t)nbyte)
+		return -1;
+	if (close(fd) == -1)
+		return -1;
+	nalnum = strlen(alnum);
+	for (; start < limit; start++)
+		*start = alnum[((unsigned char)*start) % nalnum];
+	return 0;
+}
+
 int
 shm_open_anon(void)
 {
-	const char alphabet[] = "0123456789"
-	                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	                        "abcdefghijklmnopqrstuvwxyz";
 	char name[16] = IMPL_POSIX;
-	char *p;
-	size_t n;
+	char *start;
+	char *limit;
 	int fd;
 
-	if ((fd = open("/dev/random", O_RDONLY)) == -1) {
+	start = strchr(name, 0);
+	limit = name + sizeof(name) - 1;
+	if (fill_random_alnum(start, limit) == -1)
 		return -1;
-	}
-	errno = 0;
-	p = strchr(name, 0);
-	n = sizeof(name) - 1 - (p - name);
-	if (read(fd, p, n) != (ssize_t)n) {
-		return -1;
-	}
-	if (close(fd) == -1) {
-		return -1;
-	}
-	while (p < name + sizeof(name) - 1) {
-		*p = alphabet[*p % strlen(alphabet)];
-		p++;
-	}
-	*p = 0;
+	*limit = 0;
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
 	if (fd == -1)
 		return -1;
