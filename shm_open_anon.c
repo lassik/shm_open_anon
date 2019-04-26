@@ -45,6 +45,10 @@
 #endif
 #endif
 
+#ifdef __sun
+#define IMPL_POSIX "/shmXXXXXXX"
+#endif
+
 #ifdef __DragonFly__
 #define IMPL_POSIX "/tmp/shmXXXXXXX"
 #endif

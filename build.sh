@@ -36,6 +36,11 @@ OpenBSD)
 	default_cflags="-Wall -Wextra -pedantic -std=c99"
 	default_lflags=""
 	;;
+SunOS)
+	default_cc=gcc
+	default_cflags="-Wall -Wextra -pedantic -std=c99"
+	default_lflags=""
+	;;
 *)
 	echo "Operating system not supported: $(uname)" >&2
 	exit 1
