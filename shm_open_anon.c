@@ -94,12 +94,13 @@ fill_random_alnum(char *start, char *limit)
 
 	if ((fd = open("/dev/random", O_RDONLY)) == -1)
 		return -1;
-	errno = EBUSY;
 	nbyte = limit - start;
 	if ((nread = read(fd, start, nbyte)) == (ssize_t)-1)
 		return -1;
-	if (nread != (ssize_t)nbyte)
+	if (nread != (ssize_t)nbyte) {
+		errno = EBUSY;
 		return -1;
+	}
 	if (close(fd) == -1)
 		return -1;
 	nalnum = strlen(alnum);
