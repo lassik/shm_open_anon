@@ -253,3 +253,15 @@ useful where compatibility with older systems is needed.
 - https://github.com/Alexpux/Cygwin/blob/master/newlib/libc/sys/linux/shm_open.c
 
 - http://pipeline.lbl.gov/code/3rd_party/licenses.win/Cygwin/cygserver.README
+
+== Credits
+
+Chris Wellons wrote a thoughtful blog post
+(https://nullprogram.com/blog/2016/04/10/[Mapping Multiple Memory
+Views in User Space], 2016-04-10) detailing how to use `shm_open()`
+without a filename. It also covers Windows API equivalents to
+`shm_open()` and `mmap()`, which are `CreateFileMapping()` and
+`MapViewOfFile()`.
+
+Maxim Egorushkin suggested using plain `mkostemp("/dev/shm" ,...)`
+instead of `shm_open()` on Linux.
