@@ -190,10 +190,7 @@ useful where compatibility with older systems is needed.
   translation.
 
 - To generate the pathname, I couldn't come up with anything better
-  than giving `/tmp/shmXXXXXXX` to `mktemp()`. This causes the
-  compiler (more precisely, the linker) to emit a warning because
-  `mktemp()` is often used unsafely. We can use it safely by giving
-  `O_CREAT | O_EXCL | O_NOFOLLOW` as the `shm_open()` flags.
+  than generating a random filename of the form `/tmp/shm-XXXXXXX`.
 
 - https://leaf.dragonflybsd.org/cgi/web-man?command=shm_open&section=3
 
