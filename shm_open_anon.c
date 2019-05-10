@@ -118,10 +118,10 @@ shm_open_anon(void)
 	int fd;
 
 	start = strchr(name, 0);
-	limit = name + sizeof(name) - 1;
+	limit = name + sizeof(name);
+        *--limit = 0;
 	if (fill_random_alnum(start, limit) == -1)
 		return -1;
-	*limit = 0;
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
 	if (fd == -1)
 		return -1;
