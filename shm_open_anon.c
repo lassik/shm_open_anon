@@ -32,29 +32,29 @@
 #endif
 
 #ifdef __HAIKU__
-#define IMPL_POSIX "/shm-"
+#define IMPL_POSIX
 #endif
 
 #ifdef __NetBSD__
-#define IMPL_POSIX "/shm-"
+#define IMPL_POSIX
 #endif
 
 #ifdef __APPLE__
 #ifdef __MACH__
-#define IMPL_POSIX "/shm-"
+#define IMPL_POSIX
 #endif
 #endif
 
 #ifdef __sun
-#define IMPL_POSIX "/shm-"
+#define IMPL_POSIX
 #endif
 
 #ifdef __DragonFly__
-#define IMPL_POSIX "/shm-"
+#define IMPL_POSIX
 #endif
 
 #ifdef __OpenBSD__
-#define IMPL_SHM_MKSTEMP "/shm-"
+#define IMPL_SHM_MKSTEMP
 #endif
 
 #ifdef IMPL_POSIX
@@ -112,7 +112,7 @@ fill_random_alnum(char *start, char *limit)
 int
 shm_open_anon(void)
 {
-	char name[16] = IMPL_POSIX;
+	char name[16] = "/shm-";
 	char *start;
 	char *limit;
 	int fd;
@@ -133,7 +133,7 @@ shm_open_anon(void)
 int
 shm_open_anon(void)
 {
-	char name[16] = IMPL_SHM_MKSTEMP "XXXXXXXXXX";
+	char name[16] = "/shm-XXXXXXXXXX";
 	int fd;
 
 	if ((fd = shm_mkstemp(name)) == -1)
