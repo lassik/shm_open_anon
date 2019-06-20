@@ -177,20 +177,23 @@ useful where compatibility with older systems is needed.
 
 - https://github.com/NetBSD/src/blob/trunk/lib/librt/shm.c
 
-== DragonFlyBSD
+== DragonFly BSD
 
 - `shm_open()` is the best we can do. You need to `shm_unlink()` the
   path afterwards.
 
-- `shm_open()` just does `open()` but also uses `fcntl()` to set the
-  undocumented `FPOSIXSHM` flag. It also sets `FD_CLOEXEC`. No
-  pathname translation.
+- `shm_open()` does `open()` but also uses `fcntl()` to set the
+  undocumented `FPOSIXSHM` flag. It also sets `FD_CLOEXEC`.
 
-- `shm_unlink()` is just an alias for `unlink()`. No pathname
-  translation.
+- `shm_unlink()` does `unlink()`.
+
+- Before 5.6.0 there was no pathname translation at all. Starting with
+  5.6.0 a tmpfs file system is mounted at `/var/run/shm` during boot,
+  and shm pathnames are taken relative to that directory (with any
+  number of leading slashes removed from the user-supplied pathname).
 
 - To generate the pathname, I couldn't come up with anything better
-  than generating a random filename of the form `/tmp/shm-XXXXXXX`.
+  than generating a random filename of the form `/shm-XXXXXXX`.
 
 - https://leaf.dragonflybsd.org/cgi/web-man?command=shm_open&section=3
 
