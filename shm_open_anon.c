@@ -50,7 +50,7 @@
 #endif
 
 #ifdef __DragonFly__
-#define IMPL_POSIX "/tmp/shm-"
+#define IMPL_POSIX "/shm-"
 #endif
 
 #ifdef __OpenBSD__
