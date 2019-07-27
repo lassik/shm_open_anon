@@ -3,6 +3,7 @@
 
 #ifdef __linux__
 #define _GNU_SOURCE
+#include <linux/memfd.h>
 #include <linux/unistd.h>
 #endif
 
