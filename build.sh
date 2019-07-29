@@ -3,42 +3,42 @@ set -eu
 case "$(uname)" in
 Darwin)
 	default_cc=clang
-	default_cflags="-Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
 	default_lflags=""
 	;;
 DragonFly)
 	default_cc=gcc
-	default_cflags="-Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
 	default_lflags=""
 	;;
 FreeBSD)
 	default_cc=clang
-	default_cflags="-Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
 	default_lflags=""
 	;;
 Haiku)
 	default_cc=gcc
-	default_cflags="-Wall"
+	default_cflags="-g -Wall"
 	default_lflags=""
 	;;
 Linux)
 	default_cc=gcc
-	default_cflags="-Wall -Wextra -pedantic -std=gnu99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
 	default_lflags="-lrt"
 	;;
 NetBSD)
 	default_cc=gcc
-	default_cflags="-Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
 	default_lflags="-lrt"
 	;;
 OpenBSD)
 	default_cc=clang
-	default_cflags="-Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
 	default_lflags=""
 	;;
 SunOS)
 	default_cc=gcc
-	default_cflags="-Wall -Wextra -pedantic -std=gnu99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
 	default_lflags=""
 	;;
 *)
