@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 #undef IMPL_MEMFD
@@ -83,31 +84,17 @@ shm_unlink_or_close(const char *name, int fd)
 #endif
 
 #ifdef IMPL_POSIX
-static int
-fill_random_alnum(char *start, char *limit)
+static void
+fill_random_digits(char *start, char *limit)
 {
-	const char alnum[] = "0123456789"
-	                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	                     "abcdefghijklmnopqrstuvwxyz";
-	size_t nbyte, nalnum;
-	ssize_t nread;
-	int fd;
+	struct timespec tv;
+	unsigned long x;
 
-	if ((fd = open("/dev/random", O_RDONLY)) == -1)
-		return -1;
-	nbyte = limit - start;
-	if ((nread = read(fd, start, nbyte)) == (ssize_t)-1)
-		return -1;
-	if (nread != (ssize_t)nbyte) {
-		errno = EBUSY;
-		return -1;
-	}
-	if (close(fd) == -1)
-		return -1;
-	nalnum = strlen(alnum);
-	for (; start < limit; start++)
-		*start = alnum[((unsigned char)*start) % nalnum];
-	return 0;
+	clock_gettime(CLOCK_REALTIME, &tv);
+	x = (unsigned long)tv.tv_sec + (unsigned long)tv.tv_nsec +
+	    (unsigned long)getpid();
+	for (; start < limit; x /= 8)
+		*start++ = '0' + (x % 8);
 }
 
 int
@@ -121,8 +108,7 @@ shm_open_anon(void)
 	start = strchr(name, 0);
 	limit = name + sizeof(name);
 	*--limit = 0;
-	if (fill_random_alnum(start, limit) == -1)
-		return -1;
+	fill_random_digits(start, limit);
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
 	if (fd == -1)
 		return -1;

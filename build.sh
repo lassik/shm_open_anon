@@ -38,7 +38,7 @@ OpenBSD)
 	;;
 SunOS)
 	default_cc=gcc
-	default_cflags="-Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Wall -Wextra -pedantic -std=gnu99"
 	default_lflags=""
 	;;
 *)
