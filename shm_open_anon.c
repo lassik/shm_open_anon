@@ -84,31 +84,29 @@ shm_unlink_or_close(const char *name, int fd)
 #endif
 
 #ifdef IMPL_POSIX
-static void
-fill_random_digits(char *start, char *limit)
+static unsigned long
+get_random_number(void)
 {
 	struct timespec tv;
-	unsigned long x;
 
 	clock_gettime(CLOCK_REALTIME, &tv);
-	x = (unsigned long)tv.tv_sec + (unsigned long)tv.tv_nsec +
-	    (unsigned long)getpid();
-	for (; start < limit; x /= 8)
-		*start++ = '0' + (x % 8);
+	return (unsigned long)tv.tv_sec + (unsigned long)tv.tv_nsec +
+	       (unsigned long)getpid();
 }
 
 int
 shm_open_anon(void)
 {
 	char name[16] = "/shm-";
-	char *start;
-	char *limit;
+	unsigned long r;
+	char *const limit = name + sizeof(name) - 1;
+	char *fill;
 	int fd;
 
-	start = strchr(name, 0);
-	limit = name + sizeof(name) - 1;
-	*limit = 0;
-	fill_random_digits(start, limit);
+	r = get_random_number();
+	for (fill = name + strlen(name); fill < limit; r /= 8)
+		*fill++ = '0' + (r % 8);
+	*fill = 0;
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
 	if (fd == -1)
 		return -1;
