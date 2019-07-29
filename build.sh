@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
+cd "$(dirname "$0")"
 case "$(uname)" in
 Darwin)
 	default_cc=clang
