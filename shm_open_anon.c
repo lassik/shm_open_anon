@@ -106,8 +106,8 @@ shm_open_anon(void)
 	int fd;
 
 	start = strchr(name, 0);
-	limit = name + sizeof(name);
-	*--limit = 0;
+	limit = name + sizeof(name) - 1;
+	*limit = 0;
 	fill_random_digits(start, limit);
 	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
 	if (fd == -1)
