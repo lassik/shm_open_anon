@@ -84,33 +84,32 @@ shm_unlink_or_close(const char *name, int fd)
 #endif
 
 #ifdef IMPL_POSIX
-static unsigned long
-get_random_number(void)
-{
-	struct timespec tv;
-
-	clock_gettime(CLOCK_REALTIME, &tv);
-	return (unsigned long)tv.tv_sec + (unsigned long)tv.tv_nsec +
-	       (unsigned long)getpid();
-}
-
 int
 shm_open_anon(void)
 {
 	char name[16] = "/shm-";
+	struct timespec tv;
 	unsigned long r;
 	char *const limit = name + sizeof(name) - 1;
+	char *start;
 	char *fill;
-	int fd;
+	int fd, tries;
 
-	r = get_random_number();
-	for (fill = name + strlen(name); fill < limit; r /= 8)
-		*fill++ = '0' + (r % 8);
-	*fill = 0;
-	fd = shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
-	if (fd == -1)
-		return -1;
-	return shm_unlink_or_close(name, fd);
+	*limit = 0;
+	start = name + strlen(name);
+	for (tries = 0; tries < 4; tries++) {
+		clock_gettime(CLOCK_REALTIME, &tv);
+		r = (unsigned long)tv.tv_sec + (unsigned long)tv.tv_nsec;
+		for (fill = start; fill < limit; r /= 8)
+			*fill++ = '0' + (r % 8);
+		fd =
+		  shm_open(name, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0600);
+		if (fd != -1)
+			return shm_unlink_or_close(name, fd);
+		if (errno != EEXIST)
+			break;
+	}
+	return -1;
 }
 #endif
 
