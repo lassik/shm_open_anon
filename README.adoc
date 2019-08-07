@@ -209,9 +209,18 @@ useful where compatibility with older systems is needed.
 - I didn't find anything better than `shm_open()` and `shm_unlink()`
   with POSIX semantics.
 
+- Pathnames given to `shm_open()` get translated into either
+  `/tmp/.SHMD<path>` or `/tmp/.<hash>/.SHMD/<path>` where `<hash>` is
+  the MD5 hash of the pathname you gave. There are also equivalent
+  `.SHML` lock files.
+
 - https://docs.oracle.com/cd/E26505_01/html/816-5171/shm-open-3rt.html
 
 - https://docs.oracle.com/cd/E26505_01/html/816-5171/shm-unlink-3rt.html
+
+- https://github.com/kofemann/opensolaris/blob/master/usr/src/lib/libc/port/rt/shm.c
+
+- https://github.com/kofemann/opensolaris/blob/master/usr/src/lib/libc/port/rt/pos4obj.c
 
 == Haiku (BeOS)
 
