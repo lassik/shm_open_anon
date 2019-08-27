@@ -1,5 +1,7 @@
 = shm_open_anon
 
+image::https://api.cirrus-ci.com/github/lassik/shm_open_anon.svg[Build Status, link=https://cirrus-ci.com/github/lassik/shm_open_anon]
+
 == Overview
 
 This library provides a single C function:
