@@ -1,0 +1,34 @@
+alpine_task:
+  container:
+    image: alpine
+  setup_script:
+    - apk update
+    - apk add build-base linux-headers
+  compile_script: ./build.sh
+  test_script: ./test_shared
+centos_task:
+  container:
+    image: centos
+  setup_script:
+    - yum update
+    - yum install -y gcc kernel-headers libc-devel
+  compile_script: ./build.sh
+  test_script: ./test_shared
+debian_task:
+  container:
+    image: debian
+  setup_script:
+    - apt update
+    - apt install -y gcc libc-dev linux-headers-amd64
+  compile_script: ./build.sh
+  test_script: ./test_shared
+freebsd_task:
+  freebsd_instance:
+    image: freebsd-12-0-release-amd64
+  compile_script: ./build.sh
+  test_script: ./test_shared
+macos_task:
+  osx_instance:
+    image: mojave-base
+  compile_script: ./build.sh
+  test_script: ./test_shared
