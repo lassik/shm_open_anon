@@ -4,17 +4,17 @@ cd "$(dirname "$0")"
 case "$(uname)" in
 Darwin)
 	default_cc=clang
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
 	default_lflags=""
 	;;
 DragonFly)
 	default_cc=gcc
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
 	default_lflags=""
 	;;
 FreeBSD)
 	default_cc=clang
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
 	default_lflags=""
 	;;
 Haiku)
@@ -29,12 +29,12 @@ Linux)
 	;;
 NetBSD)
 	default_cc=gcc
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
 	default_lflags="-lrt"
 	;;
 OpenBSD)
 	default_cc=clang
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=c99"
+	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
 	default_lflags=""
 	;;
 SunOS)
