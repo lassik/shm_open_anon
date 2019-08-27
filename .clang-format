@@ -5,3 +5,4 @@ IndentWidth: 8
 UseTab: ForIndentation
 AlwaysBreakAfterReturnType: TopLevel
 PointerAlignment: Right
+ColumnLimit: 78
