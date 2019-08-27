@@ -2,13 +2,13 @@
 set -eu
 cd "$(dirname "$0")"
 default_cc=gcc
-default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
+default_cflags="-Og -g -Wall -Werror -Wextra -pedantic -std=gnu99"
 default_lflags=""
 case "$(uname)" in
 Darwin) default_cc=clang ;;
 DragonFly) ;;
 FreeBSD) default_cc=clang ;;
-Haiku) default_cflags="-g -Wall" ;;
+Haiku) default_cflags="-g -Wall -Werror" ;;
 Linux) default_lflags="-lrt" ;;
 NetBSD) default_lflags="-lrt" ;;
 OpenBSD) default_cc=clang ;;
