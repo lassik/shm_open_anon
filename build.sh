@@ -1,47 +1,18 @@
 #!/bin/sh
 set -eu
 cd "$(dirname "$0")"
+default_cc=gcc
+default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
+default_lflags=""
 case "$(uname)" in
-Darwin)
-	default_cc=clang
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
-	default_lflags=""
-	;;
-DragonFly)
-	default_cc=gcc
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
-	default_lflags=""
-	;;
-FreeBSD)
-	default_cc=clang
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
-	default_lflags=""
-	;;
-Haiku)
-	default_cc=gcc
-	default_cflags="-g -Wall"
-	default_lflags=""
-	;;
-Linux)
-	default_cc=gcc
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
-	default_lflags="-lrt"
-	;;
-NetBSD)
-	default_cc=gcc
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
-	default_lflags="-lrt"
-	;;
-OpenBSD)
-	default_cc=clang
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
-	default_lflags=""
-	;;
-SunOS)
-	default_cc=gcc
-	default_cflags="-Og -g -Wall -Wextra -pedantic -std=gnu99"
-	default_lflags=""
-	;;
+Darwin) default_cc=clang ;;
+DragonFly) ;;
+FreeBSD) default_cc=clang ;;
+Haiku) default_cflags="-g -Wall" ;;
+Linux) default_lflags="-lrt" ;;
+NetBSD) default_lflags="-lrt" ;;
+OpenBSD) default_cc=clang ;;
+SunOS) ;;
 *)
 	echo "Operating system not supported: $(uname)" >&2
 	exit 1
