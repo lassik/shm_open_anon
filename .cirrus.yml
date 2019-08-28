@@ -6,6 +6,14 @@ alpine_task:
     - apk add build-base linux-headers
   compile_script: ./build.sh
   test_script: ./test_shared
+archlinux_task:
+  container:
+    image: archlinux/base
+  setup_script:
+    - pacman --noconfirm -Sy
+    - pacman --noconfirm -S gcc
+  compile_script: ./build.sh
+  test_script: ./test_shared
 centos_task:
   container:
     image: centos
@@ -20,6 +28,14 @@ debian_task:
   setup_script:
     - apt update
     - apt install -y gcc libc-dev linux-headers-amd64
+  compile_script: ./build.sh
+  test_script: ./test_shared
+ubuntu_task:
+  container:
+    image: ubuntu
+  setup_script:
+    - apt update
+    - apt install -y gcc libc-dev
   compile_script: ./build.sh
   test_script: ./test_shared
 freebsd_task:
