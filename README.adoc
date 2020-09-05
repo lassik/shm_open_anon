@@ -88,9 +88,9 @@ This technique is available in Linux kernel version 3.17 and later.
 === Old method using /dev/shm
 
 This technique is not included in the current library since all
-currently maintained Linux kernel versions (except 3.16 from 2014)
-implement the newer and more robust `memfd` API, but it is still
-useful where compatibility with older systems is needed.
+currently maintained Linux kernel versions implement the newer and
+more robust `memfd` API, but it is still useful where compatibility
+with older systems is needed.
 
 - In kernel versions before 3.17, a memory-backed file system was
   mounted into `/dev/shm` or `/run/shm` depending on the distro. (In
