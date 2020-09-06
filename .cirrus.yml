@@ -19,7 +19,7 @@ centos_task:
     image: centos
   setup_script:
     - yum update -y
-    - yum install -y gcc kernel-headers glibc-devel
+    - yum install -y gcc glibc-devel kernel-headers
   compile_script: ./build.sh
   test_script: ./test_shared
 debian_task:
