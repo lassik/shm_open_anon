@@ -40,7 +40,7 @@ ubuntu_task:
   test_script: ./test_shared
 freebsd_task:
   freebsd_instance:
-    image: freebsd-12-0-release-amd64
+    image_family: freebsd-12-1
   compile_script: ./build.sh
   test_script: ./test_shared
 macos_task:
