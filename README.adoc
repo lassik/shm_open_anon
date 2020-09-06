@@ -269,5 +269,8 @@ without a filename. It also covers Windows API equivalents to
 `shm_open()` and `mmap()`, which are `CreateFileMapping()` and
 `MapViewOfFile()`.
 
+Ludovic P improved Linux portability and helped design the random
+filename generator for `shm_open()`.
+
 Maxim Egorushkin suggested using plain `mkostemp("/dev/shm/..." ,...)`
 instead of `shm_open()` on Linux.
