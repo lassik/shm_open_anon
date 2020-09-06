@@ -18,8 +18,8 @@ centos_task:
   container:
     image: centos
   setup_script:
-    - yum update
-    - yum install -y gcc kernel-headers libc-devel
+    - yum update -y
+    - yum install -y gcc kernel-headers glibc-devel
   compile_script: ./build.sh
   test_script: ./test_shared
 debian_task:
