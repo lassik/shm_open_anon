@@ -52,9 +52,9 @@ to get to work portably. The result is delightfully simple and clear,
 but when's the last time you came across a list of gotchas like this?
 And the POSIX API is "standardized".
 
-== Linux
+=== Linux
 
-=== Current method using memfd
+==== Current method using memfd
 
 This technique is available in Linux kernel version 3.17 and later.
 
@@ -85,7 +85,7 @@ This technique is available in Linux kernel version 3.17 and later.
 
 - http://man7.org/linux/man-pages/man2/memfd_create.2.html
 
-=== Old method using /dev/shm
+==== Old method using /dev/shm
 
 This technique is not included in the current library since all
 currently maintained Linux kernel versions implement the newer and
@@ -115,7 +115,7 @@ with older systems is needed.
 
 - https://lwn.net/Articles/619146/ (how `O_TMPFILE` came about)
 
-== FreeBSD
+=== FreeBSD
 
 - Use `shm_open(SHM_ANON, O_RDWR, 0)` -- problem solved.
 
@@ -132,7 +132,7 @@ with older systems is needed.
 
 - https://github.com/freebsd/freebsd/search?q=SHM_ANON
 
-== OpenBSD
+=== OpenBSD
 
 - `shm_mkstemp()` is the thing to use. You need to `shm_unlink()` the
   path afterwards.
@@ -153,7 +153,7 @@ with older systems is needed.
 
 - https://github.com/openbsd/src/blob/master/lib/libc/gen/shm_open.c
 
-== NetBSD
+=== NetBSD
 
 - `shm_open()` is the best we can do. You need to `shm_unlink()` the
   path afterwards.
@@ -179,7 +179,7 @@ with older systems is needed.
 
 - https://github.com/NetBSD/src/blob/trunk/lib/librt/shm.c
 
-== DragonFly BSD
+=== DragonFly BSD
 
 - `shm_open()` is the best we can do. You need to `shm_unlink()` the
   path afterwards.
@@ -201,12 +201,12 @@ with older systems is needed.
 
 - https://github.com/DragonFlyBSD/DragonFlyBSD/blob/master/lib/libc/gen/posixshm.c
 
-== MacOS X
+=== MacOS X
 
 - I didn't find anything better than `shm_open()` and `shm_unlink()`
   with POSIX semantics.
 
-== Solaris
+=== Solaris
 
 - I didn't find anything better than `shm_open()` and `shm_unlink()`
   with POSIX semantics.
@@ -224,7 +224,7 @@ with older systems is needed.
 
 - https://github.com/kofemann/opensolaris/blob/master/usr/src/lib/libc/port/rt/pos4obj.c
 
-== Haiku (BeOS)
+=== Haiku (BeOS)
 
 - I didn't find anything better than `shm_open()` and `shm_unlink()`.
 
@@ -240,7 +240,7 @@ with older systems is needed.
 
 - https://github.com/haiku/haiku/blob/master/src/system/libroot/posix/sys/mman.cpp
 
-== Cygwin
+=== Cygwin
 
 - Probably have to use `shm_open()` and `shm_unlink()`.
 
