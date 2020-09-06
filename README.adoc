@@ -47,11 +47,6 @@ all file descriptors accessing it are closed.
 
 == Implementation details
 
-Read below for the gory details on how ludicrously difficult this was
-to get to work portably. The result is delightfully simple and clear,
-but when's the last time you came across a list of gotchas like this?
-And the POSIX API is "standardized".
-
 === Linux
 
 ==== Current method using memfd
